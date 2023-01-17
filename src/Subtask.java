@@ -1,4 +1,4 @@
-public class Subtask extends Epic {
+public class Subtask extends Task {
     public Subtask() {
 
     }

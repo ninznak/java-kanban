@@ -1,37 +1,36 @@
 public class Task {
     protected String name;
-    protected String description;
+    protected String[] description;
     protected static int id;                 // по нему поиск
     protected String status;            // NEW, IN_PROGRESS, DONE
 
     public Task() {
+        this.status = "NEW";
         id++;
     }
 
     public Task(String name) {
         this.name = name;
+        this.status = "NEW";
         id++;
     }
 
-    public Task(String name, String description) {
+    public Task(String name, String[] description) {
         this.name = name;
         this.description = description;
+        this.status = "NEW";
         id++;
     }
 
-    public Task(String name, String description, String status) {
-        this.name = name;
-        this.description = description;
+    public void setStatus(String status) {
         this.status = status;
-        id++;
     }
-
 
     public String getName() {
         return name;
     }
 
-    public String getDescription() {
+    public String[] getDescription() {
         return description;
     }
 
