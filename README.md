@@ -6,9 +6,15 @@
 #### Учебный проект 3-го спринта курса Yandex-Practicum
 
 - Создание базовых классов и основной структуры проекта
+<<<<<<< HEAD
 -
 - ✨Ma
 -
+=======
+- 
+- ✨Ma
+- 
+>>>>>>> 8208645169d5ed33a7f5baea74a5b27449348bac
 ## Features
 
 - Import a HTML file and watch it magically convert to Markdown
