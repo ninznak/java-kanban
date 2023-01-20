@@ -5,15 +5,9 @@ public class TaskManager {
     private static int idGenerator;
     private String[] statusList;
 
-    private static HashMap<Integer, Object> simpleTasks = new HashMap<>();
-    private static HashMap<Integer, Object> epicTasks = new HashMap<>();
-    private static HashMap<Integer, Object> subtasks = new HashMap<>();
-
-
-    public static HashMap<Integer, Object> getNewTasks() {
-        return newTasks;
-    }
-
+    private static HashMap<Integer, Task> simpleTasks = new HashMap<>();
+    private static HashMap<Integer, Epic> epicTasks = new HashMap<>();
+    private static HashMap<Integer, Subtask> subtasks = new HashMap<>();
 
 
     public void addNewTask(Task obj){
@@ -33,54 +27,75 @@ public class TaskManager {
         subtasks.put(subtask.getId(), subtask);
     }
 
-    public void getAllTasks(){
+    public void getAllTasks() {
         System.out.println("Все задачи Task: ");
-        for (Object obj : simpleTasks.keySet()){
+        for (Object obj : simpleTasks.keySet()) {
             System.out.println(simpleTasks.get(obj));
         }
 
         System.out.println("Все задачи Epic: ");
-        for (Object obj : epicTasks.keySet()){
+        for (Object obj : epicTasks.keySet()) {
             System.out.println(epicTasks.get(obj));
         }
 
         System.out.println("Задачи со статусом DONE: ");
-        for (Object obj : subtasks.keySet()){
+        for (Object obj : subtasks.keySet()) {
             System.out.println(subtasks.get(obj));
         }
     }
 
-    public void cleanAllTasks(){
+    public void cleanTasks() {               // Tasks methods
         simpleTasks.clear();
     }
 
-    public void cleanAllEpics(){
+    public Task getTaskById(int id) {
+        return simpleTasks.get(id);
+    }
+
+    public void updateTaskById(Task updTask) {
+        simpleTasks.put(updTask.getId(), new Task());
+    }
+
+    public void deleteTaskById(int id) {
+        simpleTasks.remove(getTaskById(id));
+    }
+
+    public void updateStatusOfTask(Task task, String newStatus) {
+        task.setStatus(newStatus);
+    }
+
+    public void cleanAllEpics() {            // Epic methods
         epicTasks.clear();
     }
 
-    public void cleanAllSubtasks(){
-        subtasks.clear();
-
+    public Epic getEpicById(int id) {
+        return epicTasks.get(id);
     }
 
+    public void updateEpicById(Epic updEpic) {
+        epicTasks.put(updEpic.getId(), new Epic());
+    }
 
-    public String getObjById(int id){
-        Object toFind = new Object();
-        for (Object obj : newTasks.values()){
-            if (obj == id){
-                toFind = obj;
-            };
-        }
+    public void deleteEpicById(int id) {
+        epicTasks.remove(getEpicById(id));
+    }
 
-        System.out.println("Задачи со статусом IN_PROGRESS: ");
-        for (Object obj : inProgressTasks.keySet()){
-            System.out.println(inProgressTasks.get(obj));
-        }
+    public void updateStatusOfEpic(Epic epic, String newStatus) {
+        if(true){
 
-        System.out.println("Задачи со статусом DONE: ");
-        for (Object obj : doneTasks.keySet()){
-            System.out.println(doneTasks.get(obj));
         }
+        epic.setStatus(newStatus);
+    }
+
+    public void cleanAllSubtasks(){                 //Subtask methods
+        subtasks.clear();
+        for (Integer id : epicTasks.keySet()){
+            epicTasks.get(id).subtasks.clear();
+        }
+    }
+
+    public Subtask getSubtaskById(int id){
+        return subtasks.get(id);
     }
 
     public void getSubTasks(int getId){

@@ -29,7 +29,7 @@ public class Main {
         taskManager.addNewEpic(epic1);
         taskManager.addNewEpic(epic2);
 
-        System.out.println(taskManager.getNewTasks());
+        //System.out.println(taskManager.getNewTasks());
 
         System.out.println(epic2.getId());
         System.out.println(subtask2.getId());

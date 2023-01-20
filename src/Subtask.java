@@ -15,7 +15,7 @@ public class Subtask extends Task {
         this.status = statusTask[0];
     }
 
-    @Override
+/*    @Override
     public void setStatus(String status) {
         super.setStatus(status);
     }
@@ -33,7 +33,7 @@ public class Subtask extends Task {
     @Override
     public void setDescription(String description) {
         super.setDescription(description);
-    }
+    }*/
 
     public void setEpicParentId(int epicParentId) {
         this.epicId = epicParentId;
