@@ -8,6 +8,33 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) throws IOException {
+
+        TaskManager taskManager = new TaskManager();
+
+        Task task1 = new Task("Задача 1", "rexf, dfddfd,   dgdg,sfs");
+        taskManager.addNewTask(task1);
+        Task task2 = new Task("Zadacha2", "gjgjg, jhkjkkh,jhgjh,    jhgg ");
+        taskManager.addNewTask(task2);
+
+        Epic epic1 = new Epic();
+        Subtask subtask1 = new Subtask("Subtaskname1 name", "Subdescription", epic1.getId());
+        Subtask subtask2 = new Subtask(epic1.getId());
+
+        Epic epic2 = new Epic();
+        Subtask subtask3 = new Subtask(epic2.getId());
+
+
+        taskManager.addNewTask(task1);
+        taskManager.addNewTask(task2);
+        taskManager.addNewEpic(epic1);
+        taskManager.addNewEpic(epic2);
+
+        System.out.println(taskManager.getNewTasks());
+
+        System.out.println(epic2.getId());
+        System.out.println(subtask2.getId());
+
+        /*
         System.out.println("Добро пожаловать в основу программы \"Доска Kanban\".");
 
         Scanner scanner = new Scanner(System.in);
@@ -15,6 +42,9 @@ public class Main {
         TaskManager taskManager = new TaskManager();
 
         System.out.println("Меню программы: ");
+
+        Subtask new222 = new Subtask(5){
+        };
 
         while(true){
             printMenu();
@@ -36,23 +66,14 @@ public class Main {
 
                         System.out.println("Введите пункты задачи для выполнения через запятую: ");
                         taskDescription = WhitespaceDeleter.clean(bufferedReader.readLine().split(","));
-
-                        Task task = new Task(taskName, taskDescription);
-                        taskManager.newTasks.put(task.getId(), task);
-                        System.out.println(task.getStatus());
-                                /*Task task = new Task(taskName, taskDescription);
-                                    System.out.println(task.getId());*/
                         System.out.println(Arrays.toString(taskDescription));
                     }
                 case 0:
                     break;
             }
-
-            /*if(command == 1){
-
-            }*/
         }
     }
+
 
     public static void printMenu() {
         System.out.println("Главное меню программы: ");
@@ -65,8 +86,7 @@ public class Main {
         System.out.println("Меню внесения новой задачи: ");
         System.out.println("1 <<-- Внести обычную задачу");
         System.out.println("2 <<-- Внести ЭПИК задачу (с подзадачами)");
-    }
-
-    /*static void main(String[] args){
     }*/
+
+    }
 }
