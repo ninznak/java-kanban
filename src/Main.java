@@ -17,20 +17,20 @@ public class Main {
         Subtask subtask2 = new Subtask("Подзадача новая 22 ", "Описание подзадачи 22 ");
         taskManager.addNewSubtask(epic1, subtask1);
         taskManager.addNewSubtask(epic1, subtask2);
-        //taskManager.getEpicById(2);
-        taskManager.getEpicById(2);
+        //taskManager.deleteEpicById(2);
 
         Epic epic2 = new Epic("22 вторая ЭПИЧНАЯ задача", "маленькое описание эпика 22");
-        System.out.println(epic2);
         taskManager.addNewEpic(epic2);
+        System.out.println(epic2);
 
         taskManager.getAllTasks();
         System.out.println("");
+        taskManager.showEpicSubtasks(2);
 
         //taskManager.deleteEpicById(2);
         //taskManager.cleanAllSubtasks();
 
-        taskManager.getAllTasks();
+        //taskManager.getAllTasks();
         //taskManager.showEpicSubtasks(2);
 
 
