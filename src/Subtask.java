@@ -9,31 +9,11 @@ public class Subtask extends Task {
         this.status = statusTask[0];
     }
 
-    public Subtask(String name, String description, int parentId){
+    public Subtask(String name, String description){
         super(name, description);
-        epicId = parentId;
         this.status = statusTask[0];
     }
 
-/*    @Override
-    public void setStatus(String status) {
-        super.setStatus(status);
-    }
-
-    @Override
-    public void setId(int id) {
-        super.setId(id);
-    }
-
-    @Override
-    public void setName(String name) {
-        super.setName(name);
-    }
-
-    @Override
-    public void setDescription(String description) {
-        super.setDescription(description);
-    }*/
 
     public void setEpicParentId(int epicParentId) {
         this.epicId = epicParentId;

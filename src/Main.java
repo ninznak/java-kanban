@@ -1,9 +1,4 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.Scanner;
 
 public class Main {
 
@@ -11,82 +6,48 @@ public class Main {
 
         TaskManager taskManager = new TaskManager();
 
-        Task task1 = new Task("Задача 1", "rexf, dfddfd,   dgdg,sfs");
+        Task task1 = new Task("Задача Простая 1", "Купить молоко, Купить яйца, купить торт");
         taskManager.addNewTask(task1);
-        Task task2 = new Task("Zadacha2", "gjgjg, jhkjkkh,jhgjh,    jhgg ");
+        Task task2 = new Task("Задача простая на воскресенье", "Повеселиться, Сходить в кино , спать");
         taskManager.addNewTask(task2);
 
-        Epic epic1 = new Epic();
-        Subtask subtask1 = new Subtask("Subtaskname1 name", "Subdescription", epic1.getId());
-        Subtask subtask2 = new Subtask(epic1.getId());
-
-        Epic epic2 = new Epic();
-        Subtask subtask3 = new Subtask(epic2.getId());
-
-
-        taskManager.addNewTask(task1);
-        taskManager.addNewTask(task2);
+        Epic epic1 = new Epic("1 Первая ЭПИЧНАЯ задача");
         taskManager.addNewEpic(epic1);
+        Subtask subtask1 = new Subtask("Подзадача новая", "Описание подзадачи");
+        Subtask subtask2 = new Subtask("Подзадача новая 22 ", "Описание подзадачи 22 ");
+        taskManager.addNewSubtask(epic1, subtask1);
+        taskManager.addNewSubtask(epic1, subtask2);
+        //taskManager.getEpicById(2);
+        taskManager.getEpicById(2);
+
+        Epic epic2 = new Epic("22 вторая ЭПИЧНАЯ задача", "маленькое описание эпика 22");
+        System.out.println(epic2);
         taskManager.addNewEpic(epic2);
 
-        //System.out.println(taskManager.getNewTasks());
+        taskManager.getAllTasks();
+        System.out.println("");
 
-        System.out.println(epic2.getId());
-        System.out.println(subtask2.getId());
+        //taskManager.deleteEpicById(2);
+        //taskManager.cleanAllSubtasks();
 
-        /*
-        System.out.println("Добро пожаловать в основу программы \"Доска Kanban\".");
-
-        Scanner scanner = new Scanner(System.in);
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        TaskManager taskManager = new TaskManager();
-
-        System.out.println("Меню программы: ");
-
-        Subtask new222 = new Subtask(5){
-        };
-
-        while(true){
-            printMenu();
-            int command = scanner.nextInt();
-
-            switch (command) {
-                case 1:
-                    System.out.println("Формируем новую задачу!");
-                    printMakeTaskMenu();
-                    int subCommand = scanner.nextInt();
-
-                    if (subCommand == 1) {
-                        String taskName;
-                        String[] taskDescription;
-
-                        System.out.println("<-- Введите данные новой задачи -->");
-                        System.out.println("Введите название (заголовок) задачи");
-                        taskName = bufferedReader.readLine();
-
-                        System.out.println("Введите пункты задачи для выполнения через запятую: ");
-                        taskDescription = WhitespaceDeleter.clean(bufferedReader.readLine().split(","));
-                        System.out.println(Arrays.toString(taskDescription));
-                    }
-                case 0:
-                    break;
-            }
-        }
-    }
+        taskManager.getAllTasks();
+        //taskManager.showEpicSubtasks(2);
 
 
-    public static void printMenu() {
-        System.out.println("Главное меню программы: ");
-        System.out.println("1 <<-- занести новую задачу на доску");
-        System.out.println("2 <<-- резерв ... ");
-        System.out.println("0 <<-- выход");
-    }
+/*        Epic epic2 = new Epic();  // "2 вторая эпичная задача"
+        taskManager.addNewEpic(epic2);
+        Subtask subtask3 = new Subtask(epic2.getId());
+        taskManager.addNewSubtask(epic1, subtask3);
 
-    public static void printMakeTaskMenu() {
-        System.out.println("Меню внесения новой задачи: ");
-        System.out.println("1 <<-- Внести обычную задачу");
-        System.out.println("2 <<-- Внести ЭПИК задачу (с подзадачами)");
-    }*/
+        taskManager.updateTask(task1);
+
+        taskManager.getAllTasks();
+        System.out.println("");
+
+        System.out.println(taskManager.getTaskById(0));
+
+        taskManager.getAllTasks();*/
+
 
     }
 }

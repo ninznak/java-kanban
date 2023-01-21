@@ -1,15 +1,29 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 
 public class Epic extends Task {
 
-    protected ArrayList<Subtask> subtasks;
+    protected ArrayList<Subtask> subtasks = new ArrayList<>();
+
+    public Epic(){
+        super();
+    }
+
+    public Epic(String name){
+        super(name);
+    }
+
+    public Epic(String name, String description){
+        super(name, description);
+    }
 
     public ArrayList<Subtask> getSubtasks() {
+        System.out.println("Все подзадачи эпика " + this.name);
         return subtasks;
+    }
+
+    public void cleanSubtasksArray(){
+        subtasks.clear();
     }
 
     @Override
