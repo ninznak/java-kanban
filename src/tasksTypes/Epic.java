@@ -1,28 +1,38 @@
+package tasksTypes;
+
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Epic extends Task {
 
-    protected ArrayList<Subtask> subtasks = new ArrayList<>();
+    protected List<Subtask> subtasks;
 
-    public Epic(){
+    public Epic() {
         super();
+        this.subtasks = new ArrayList<>();
     }
 
-    public Epic(String name){
+    public Epic(String name) {
         super(name);
+        this.subtasks = new ArrayList<>();
     }
 
-    public Epic(String name, String description){
+    public Epic(String name, String description) {
         super(name, description);
+        this.subtasks = new ArrayList<>();
     }
 
-    public ArrayList<Subtask> getSubtasks() {
+    public List<Subtask> getSubtasks() {
         System.out.println("Все подзадачи эпика " + this.name);
         return subtasks;
     }
 
-    public void cleanSubtasksArray(){
+    public void setSubtasks(List<Subtask> subtasks) {
+        this.subtasks = subtasks;
+    }
+
+    public void cleanSubtasksArray() {
         subtasks.clear();
     }
 
@@ -41,7 +51,7 @@ public class Epic extends Task {
 
     @Override
     public String toString() {
-        return "Epic{" +
+        return "tasksTypes.Epic{" +
                 "subtasks=" + subtasks +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +

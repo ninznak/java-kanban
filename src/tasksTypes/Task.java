@@ -1,4 +1,8 @@
+package tasksTypes;
+
 import java.util.Objects;
+import managers.StatusList;
+import managers.WhitespaceDeleter;
 
 public class Task implements StatusList {
     protected String name;
@@ -7,18 +11,24 @@ public class Task implements StatusList {
     protected String status;            // NEW, IN_PROGRESS, DONE
 
     public Task() {
-        this.status = statusTask[0];
+        this.status = StatusList.statusTask[0];
     }
 
     public Task(String name) {
         this.name = name;
-        this.status = statusTask[0];
+        this.status = StatusList.statusTask[0];
     }
 
     public Task(String name, String description) {
         this.name = name;
         this.description = description;
-        this.status = statusTask[0];
+        this.status = StatusList.statusTask[0];
+    }
+
+    public Task(String name, String description, String status) {
+        this.name = name;
+        this.description = description;
+        this.status = status;
     }
 
     public void setStatus(String status) {
@@ -69,7 +79,7 @@ public class Task implements StatusList {
 
     @Override
     public String toString() {
-        return "Task{" +
+        return "tasksTypes.Task{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", id=" + id +

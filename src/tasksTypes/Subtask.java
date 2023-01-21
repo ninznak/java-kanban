@@ -1,3 +1,6 @@
+package tasksTypes;
+
+import managers.StatusList;
 import java.util.Objects;
 
 public class Subtask extends Task {
@@ -6,14 +9,17 @@ public class Subtask extends Task {
 
     public Subtask(int parentId) {
         epicId = parentId;
-        this.status = statusTask[0];
+        this.status = StatusList.statusTask[0];
     }
 
-    public Subtask(String name, String description){
+    public Subtask(String name, String description) {
         super(name, description);
-        this.status = statusTask[0];
+        this.status = StatusList.statusTask[0];
     }
 
+    public Subtask(String name, String description, String status) {
+        super(name, description, status);
+    }
 
     public void setEpicParentId(int epicParentId) {
         this.epicId = epicParentId;
@@ -39,7 +45,7 @@ public class Subtask extends Task {
 
     @Override
     public String toString() {
-        return "Subtask{" +
+        return "tasksTypes.Subtask{" +
                 "epicId=" + epicId +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
