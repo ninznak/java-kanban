@@ -1,4 +1,3 @@
-import managers.StatusList;
 import managers.TaskManager;
 import tasksTypes.Epic;
 import tasksTypes.Subtask;
@@ -23,11 +22,7 @@ public class Main {
         Subtask subtask2 = new Subtask("Подзадача новая 22 ", "Описание подзадачи 22 ");
         taskManager.addNewSubtask(epic1, subtask1);
         taskManager.addNewSubtask(epic1, subtask2);
-
-        //taskManager.deleteEpicById(2);
-        System.out.println("++++++++++++++++++++++");
-        System.out.println(taskManager.getEpicSubtasks(epic1));
-        //System.out.println(taskManager.getEpicSubtasks(epic1));
+        System.out.println(taskManager.getEpicTasks());
 
         Epic epic2 = new Epic("22 вторая ЭПИЧНАЯ задача", "маленькое описание эпика 22");
         taskManager.addNewEpic(epic2);
@@ -44,16 +39,18 @@ public class Main {
         taskManager.updateTask(task2, taskToUpdate);
 
         Subtask subtaskUpd = new Subtask("Подзададача второ эпика",
-                "Чтото нужно сделать, сделать еще", "IN_PROGRESS");
-
+                "Чтото нужно сделать, сделать еще", "DONE");
         taskManager.updateSubtask(subtask3, subtaskUpd);
-
-        //taskManager.deleteTaskById(1);
-        //taskManager.deleteEpicById(2);
 
         System.out.println(taskManager.getSimpleTasks());
         System.out.println(taskManager.getEpicTasks());
         System.out.println(taskManager.getSubtasks());
+
+        taskManager.deleteTaskById(1);
+        taskManager.deleteEpicById(2);
+
+        System.out.println(taskManager.getSimpleTasks());
+        System.out.println(taskManager.getEpicTasks());
 
     }
 }

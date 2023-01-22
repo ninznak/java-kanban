@@ -5,6 +5,7 @@ import tasksTypes.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TaskManager {
     private static int idGenerator;
@@ -70,27 +71,31 @@ public class TaskManager {
         subtasks.clear();
     }
 
-    public void deleteEpicById(int id) {  //??????????????????????????????????
-        System.out.println("Задача EPIC id-" + id + " и её подзадачи удалены");
-        epicTasks.get(id).getSubtasks();
-        epicTasks.remove(id);
+    public void deleteEpicById(int id) {
+        System.out.println("Задача EPIC id-" + id + " удалена");
 
-/*    for (int idToDelete : subtasks.keySet()){
-            if (subtasks.get(idToDelete).getEpicParentId() == id){
-                //deleteSubtaskById(idToDelete);
-                //System.out.println(subtasks.get(idToDelete));
-                subtasks.clear();
+        epicTasks.remove(id);
+        /*for(Integer subtaskId : subtasks.keySet()){
+            if (subtasks.get(subtaskId).getEpicParentId() == id){
+                subtasks.remove(subtaskId);
             }
         }*/
+        for(Map.Entry<Integer, Subtask> subtask : subtasks.entrySet()) {
+            if (subtask.getValue().getEpicParentId() == id) {
+                subtasks.remove(subtask);
+            }
+        }
+
     }
 
     public Epic getEpicById(int id) {
         System.out.println("Получена EPIC задача id №" + id);
+        getEpicSubtasks(epicTasks.get(id));
         return epicTasks.get(id);
     }
 
     public List<Subtask> getEpicSubtasks(Epic epic) {
-        System.out.println("Получены подзадачи от EPIC id №" + epic.getId());
+        System.out.println("Получены подзадачи от EPIC id №" + epic.getId() + ". Название - " + epic.getName());
         List<Subtask> subtaskList = new ArrayList<>();
         for (Subtask subtask : subtasks.values()) {
             if (subtask.getEpicParentId() == epic.getId()) {
@@ -127,9 +132,13 @@ public class TaskManager {
         newSubtask.setEpicParentId(oldSubtask.getEpicParentId());
         subtasks.put(oldSubtask.getId(), newSubtask);
 
+        if (!newSubtask.getStatus().equals("DONE")){
+            return;
+        }
+
         List<Subtask> subtaskForCheck = epicTasks.get(oldSubtask.getEpicParentId()).getSubtasks();
-        for (Subtask chek : subtaskForCheck) {
-            if (chek.getStatus().equals("DONE")){
+        for (Subtask check : subtaskForCheck) {
+            if (check.getStatus().equals("DONE")){
                 counter++;
             }
         }
