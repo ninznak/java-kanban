@@ -29,7 +29,7 @@ public class TaskManager {
         subtask.setId(idGenerator++);
         subtask.setEpicParentId(epicParent.getId());
         subtasks.put(subtask.getId(), subtask);
-        epicParent.setStatus(StatusList.statusTask[1]);
+        epicParent.setStatus(StatusList.statusTask.IN_PROGRESS);
     }
 
     public HashMap<Integer, Task> getSimpleTasks() {
@@ -104,7 +104,7 @@ public class TaskManager {
         subtasks.clear();
         System.out.println("Все подзадачи очищены!");
         for (Epic epic : epicTasks.values()) {
-            epic.setStatus(StatusList.statusTask[0]);
+            epic.setStatus(StatusList.statusTask.NEW);
         }
     }
 
@@ -126,18 +126,18 @@ public class TaskManager {
         newSubtask.setEpicParentId(oldSubtask.getEpicParentId());
         subtasks.put(oldSubtask.getId(), newSubtask);
 
-        if (!newSubtask.getStatus().equals("DONE")) {
+        if (!newSubtask.getStatus().equals(StatusList.statusTask.DONE)) {
             return;
         }
 
         List<Subtask> subtaskForCheck = epicTasks.get(oldSubtask.getEpicParentId()).getSubtasks();
         for (Subtask check : subtaskForCheck) {
-            if (check.getStatus().equals("DONE")) {
+            if (check.getStatus().equals(StatusList.statusTask.DONE)) {
                 counter++;
             }
         }
         if (counter == subtaskForCheck.size()) {
-            epicTasks.get(oldSubtask.getEpicParentId()).setStatus("DONE");
+            epicTasks.get(oldSubtask.getEpicParentId()).setStatus(StatusList.statusTask.DONE);
         }
     }
 }

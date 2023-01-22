@@ -10,15 +10,15 @@ public class Subtask extends Task {
 
     public Subtask(int parentId) {
         epicId = parentId;
-        this.status = StatusList.statusTask[0];
+        this.status = statusTask.NEW;
     }
 
     public Subtask(String name, String description) {
         super(name, description);
-        this.status = StatusList.statusTask[0];
+        this.status = statusTask.NEW;
     }
 
-    public Subtask(String name, String description, String status) {
+    public Subtask(String name, String description, statusTask status) {
         super(name, description, status);
     }
 

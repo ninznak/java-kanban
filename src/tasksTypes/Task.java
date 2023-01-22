@@ -9,30 +9,30 @@ public class Task implements StatusList {
     protected String name;
     protected String description;
     protected int id;                 // по нему поиск
-    protected String status;            // NEW, IN_PROGRESS, DONE
+    protected statusTask status;            // NEW, IN_PROGRESS, DONE
 
     public Task() {
-        this.status = StatusList.statusTask[0];
+        this.status = statusTask.NEW;
     }
 
     public Task(String name) {
         this.name = name;
-        this.status = StatusList.statusTask[0];
+        this.status = statusTask.NEW;
     }
 
     public Task(String name, String description) {
         this.name = name;
         this.description = description;
-        this.status = StatusList.statusTask[0];
+        this.status = statusTask.NEW;
     }
 
-    public Task(String name, String description, String status) {
+    public Task(String name, String description, statusTask status) {
         this.name = name;
         this.description = description;
         this.status = status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(statusTask status) {
         this.status = status;
     }
 
@@ -60,7 +60,7 @@ public class Task implements StatusList {
         return id;
     }
 
-    public String getStatus() {
+    public statusTask getStatus() {
         return status;
     }
 
@@ -80,11 +80,11 @@ public class Task implements StatusList {
 
     @Override
     public String toString() {
-        return "tasksTypes.Task{" +
+        return "Task{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", id=" + id +
-                ", status='" + status + '\'' +
+                ", status=" + status +
                 '}';
     }
 }

@@ -1,3 +1,4 @@
+import managers.StatusList;
 import managers.TaskManager;
 import tasksTypes.Epic;
 import tasksTypes.Subtask;
@@ -35,11 +36,11 @@ public class Main {
         System.out.println("");
 
         Task taskToUpdate = new Task("Задача Простая 1UPD", "Купить молокоNEW, Купить яйца, купить торт",
-                "DONE");
+                StatusList.statusTask.DONE);
         taskManager.updateTask(task2, taskToUpdate);
 
         Subtask subtaskUpd = new Subtask("Подзададача второ эпика",
-                "Чтото нужно сделать, сделать еще", "DONE");
+                "Чтото нужно сделать, сделать еще", StatusList.statusTask.DONE);
         taskManager.updateSubtask(subtask3, subtaskUpd);
 
         System.out.println(taskManager.getSimpleTasks());
