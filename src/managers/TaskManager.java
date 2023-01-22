@@ -8,7 +8,6 @@ public class TaskManager {
     private static int idGenerator;
     private HashMap<Integer, Task> simpleTasks = new HashMap<>();
     private HashMap<Integer, Epic> epicTasks = new HashMap<>();
-    //private HashMap<Integer, Subtask> subtasks = new HashMap<>();
     private HashMap<Integer, Subtask> subtasks = new HashMap<>();
 
 
@@ -70,7 +69,7 @@ public class TaskManager {
     }
 
     public void deleteEpicById(int id) {
-        System.out.println("Задача EPIC id-" + id + " удалена");
+        System.out.println("Задача EPIC id-" + id + " удалена вместе с подзадачами");
         epicTasks.remove(id);
 
         Iterator<Integer> it = subtasks.keySet().iterator();
@@ -81,11 +80,6 @@ public class TaskManager {
                 it.remove();
             }
         }
-        /*for (Map.Entry<Integer, Subtask> subtask : subtasks.entrySet()) {     // не работает
-            if (subtask.getValue().getEpicParentId() == id) {
-                subtasks.remove(subtask);
-            }
-        }*/
     }
 
     public Epic getEpicById(int id) {
