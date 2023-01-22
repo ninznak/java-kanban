@@ -2,15 +2,13 @@ package managers;
 
 import tasksTypes.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class TaskManager {
     private static int idGenerator;
     private HashMap<Integer, Task> simpleTasks = new HashMap<>();
     private HashMap<Integer, Epic> epicTasks = new HashMap<>();
+    //private HashMap<Integer, Subtask> subtasks = new HashMap<>();
     private HashMap<Integer, Subtask> subtasks = new HashMap<>();
 
 
@@ -75,12 +73,19 @@ public class TaskManager {
         System.out.println("Задача EPIC id-" + id + " удалена");
         epicTasks.remove(id);
 
-        for (Map.Entry<Integer, Subtask> subtask : subtasks.entrySet()) {
+        Iterator<Integer> it = subtasks.keySet().iterator();
+
+        while (it.hasNext()) {
+            Integer key = it.next();
+            if (subtasks.get(key).getEpicParentId() == id) {
+                it.remove();
+            }
+        }
+        /*for (Map.Entry<Integer, Subtask> subtask : subtasks.entrySet()) {     // не работает
             if (subtask.getValue().getEpicParentId() == id) {
                 subtasks.remove(subtask);
             }
-        }
-
+        }*/
     }
 
     public Epic getEpicById(int id) {
