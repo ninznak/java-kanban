@@ -71,7 +71,6 @@ public class TaskManager {
     public void deleteEpicById(int id) {
         System.out.println("Задача EPIC id-" + id + " удалена вместе с подзадачами");
         epicTasks.remove(id);
-
         Iterator<Integer> it = subtasks.keySet().iterator();
 
         while (it.hasNext()) {
@@ -83,8 +82,7 @@ public class TaskManager {
     }
 
     public Epic getEpicById(int id) {
-        System.out.println("Получена EPIC задача id №" + id);
-        getEpicSubtasks(epicTasks.get(id));
+        System.out.println("Вывод EPIC задачи id №" + id);
         return epicTasks.get(id);
     }
 
@@ -96,8 +94,7 @@ public class TaskManager {
                 subtaskList.add(subtask);
             }
         }
-        epic.setSubtasks(subtaskList);
-        return epic.getSubtasks();
+        return subtaskList;
     }
 
     public void cleanAllSubtasks() {                 //tasksTypes.Subtask methods
