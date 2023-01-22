@@ -73,14 +73,9 @@ public class TaskManager {
 
     public void deleteEpicById(int id) {
         System.out.println("Задача EPIC id-" + id + " удалена");
-
         epicTasks.remove(id);
-        /*for(Integer subtaskId : subtasks.keySet()){
-            if (subtasks.get(subtaskId).getEpicParentId() == id){
-                subtasks.remove(subtaskId);
-            }
-        }*/
-        for(Map.Entry<Integer, Subtask> subtask : subtasks.entrySet()) {
+
+        for (Map.Entry<Integer, Subtask> subtask : subtasks.entrySet()) {
             if (subtask.getValue().getEpicParentId() == id) {
                 subtasks.remove(subtask);
             }
@@ -127,22 +122,22 @@ public class TaskManager {
     public void updateSubtask(Subtask oldSubtask, Subtask newSubtask) {
         int counter = 0;
 
-        System.out.println("Подзадача " + oldSubtask.getId()+ " обновлена");
+        System.out.println("Подзадача " + oldSubtask.getId() + " обновлена");
         newSubtask.setId(oldSubtask.getId());
         newSubtask.setEpicParentId(oldSubtask.getEpicParentId());
         subtasks.put(oldSubtask.getId(), newSubtask);
 
-        if (!newSubtask.getStatus().equals("DONE")){
+        if (!newSubtask.getStatus().equals("DONE")) {
             return;
         }
 
         List<Subtask> subtaskForCheck = epicTasks.get(oldSubtask.getEpicParentId()).getSubtasks();
         for (Subtask check : subtaskForCheck) {
-            if (check.getStatus().equals("DONE")){
+            if (check.getStatus().equals("DONE")) {
                 counter++;
             }
         }
-        if (counter == subtaskForCheck.size()){
+        if (counter == subtaskForCheck.size()) {
             epicTasks.get(oldSubtask.getEpicParentId()).setStatus("DONE");
         }
     }

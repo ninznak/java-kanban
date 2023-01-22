@@ -1,6 +1,7 @@
 package tasksTypes;
 
 import managers.StatusList;
+
 import java.util.Objects;
 
 public class Subtask extends Task {

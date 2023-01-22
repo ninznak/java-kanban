@@ -1,6 +1,7 @@
 package tasksTypes;
 
 import java.util.Objects;
+
 import managers.StatusList;
 import managers.WhitespaceDeleter;
 
