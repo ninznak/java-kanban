@@ -2,37 +2,36 @@ package tasksTypes;
 
 import java.util.Objects;
 
-import managers.StatusList;
 import managers.WhitespaceDeleter;
 
-public class Task implements StatusList {
+public class Task {
     protected String name;
     protected String description;
-    protected int id;                 // по нему поиск
-    protected statusTask status;            // NEW, IN_PROGRESS, DONE
+    protected int id;
+    public Status status;            // NEW, IN_PROGRESS, DONE
 
     public Task() {
-        this.status = statusTask.NEW;
+        this.status = status.NEW;
     }
 
     public Task(String name) {
         this.name = name;
-        this.status = statusTask.NEW;
+        this.status = status.NEW;
     }
 
     public Task(String name, String description) {
         this.name = name;
         this.description = description;
-        this.status = statusTask.NEW;
+        this.status = status.NEW;
     }
 
-    public Task(String name, String description, statusTask status) {
+    public Task(String name, String description, Status status) {
         this.name = name;
         this.description = description;
         this.status = status;
     }
 
-    public void setStatus(statusTask status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
@@ -60,7 +59,7 @@ public class Task implements StatusList {
         return id;
     }
 
-    public statusTask getStatus() {
+    public Status getStatus() {
         return status;
     }
 

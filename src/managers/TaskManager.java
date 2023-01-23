@@ -2,14 +2,17 @@ package managers;
 
 import tasksTypes.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+
 
 public class TaskManager {
     private static int idGenerator;
     private HashMap<Integer, Task> simpleTasks = new HashMap<>();
     private HashMap<Integer, Epic> epicTasks = new HashMap<>();
     private HashMap<Integer, Subtask> subtasks = new HashMap<>();
-
 
     public void addNewTask(Task obj) {           // added different types of tasks
         System.out.println("Добавлена обычная задача TASK, присвоен номер id №" + idGenerator);
@@ -29,7 +32,7 @@ public class TaskManager {
         subtask.setId(idGenerator++);
         subtask.setEpicParentId(epicParent.getId());
         subtasks.put(subtask.getId(), subtask);
-        epicParent.setStatus(StatusList.statusTask.IN_PROGRESS);
+        epicParent.setStatus(Status.IN_PROGRESS);
     }
 
     public HashMap<Integer, Task> getSimpleTasks() {
@@ -101,7 +104,7 @@ public class TaskManager {
         subtasks.clear();
         System.out.println("Все подзадачи очищены!");
         for (Epic epic : epicTasks.values()) {
-            epic.setStatus(StatusList.statusTask.NEW);
+            epic.setStatus(Status.NEW);
         }
     }
 
@@ -123,18 +126,18 @@ public class TaskManager {
         newSubtask.setEpicParentId(oldSubtask.getEpicParentId());
         subtasks.put(oldSubtask.getId(), newSubtask);
 
-        if (!newSubtask.getStatus().equals(StatusList.statusTask.DONE)) {
+        if (!newSubtask.getStatus().equals(Status.DONE)) {
             return;
         }
 
-        List<Subtask> subtaskForCheck = epicTasks.get(oldSubtask.getEpicParentId()).getSubtasks();
+        List<Subtask> subtaskForCheck = getEpicSubtasks(epicTasks.get(oldSubtask.getEpicParentId()));
         for (Subtask check : subtaskForCheck) {
-            if (check.getStatus().equals(StatusList.statusTask.DONE)) {
+            if (check.getStatus().equals(Status.DONE)) {
                 counter++;
             }
         }
         if (counter == subtaskForCheck.size()) {
-            epicTasks.get(oldSubtask.getEpicParentId()).setStatus(StatusList.statusTask.DONE);
+            epicTasks.get(oldSubtask.getEpicParentId()).setStatus(Status.DONE);
         }
     }
 }

@@ -6,57 +6,39 @@ import java.util.Objects;
 
 public class Epic extends Task {
 
-    protected List<Subtask> subtasks;
-
     public Epic() {
         super();
-        this.subtasks = new ArrayList<>();
     }
 
     public Epic(String name) {
         super(name);
-        this.subtasks = new ArrayList<>();
     }
 
     public Epic(String name, String description) {
         super(name, description);
-        this.subtasks = new ArrayList<>();
-    }
-
-    public List<Subtask> getSubtasks() {
-        System.out.println("Все подзадачи эпика " + this.name);
-        return subtasks;
-    }
-
-    public void setSubtasks(List<Subtask> subtasks) {
-        this.subtasks = subtasks;
-    }
-
-    public void cleanSubtasksArray() {
-        subtasks.clear();
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Epic) || !super.equals(o)) return false;
-        Epic epic = (Epic) o;
-        return Objects.equals(getSubtasks(), epic.getSubtasks());
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || this.getClass() != obj.getClass()) return false;
+        Epic otherEpic = (Epic) obj;
+        return Objects.equals(name, otherEpic.name) && Objects.equals(description, otherEpic.description)
+                && (id == otherEpic.id) && Objects.equals(status, otherEpic.status);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getSubtasks());
+        return Objects.hash(getName(), getDescription(), getId(), getStatus());
     }
 
     @Override
     public String toString() {
-        return "tasksTypes.Epic{" +
-                "subtasks=" + subtasks +
-                ", name='" + name + '\'' +
+        return "Epic{" +
+                "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", id=" + id +
-                ", status='" + status + '\'' +
+                ", status=" + status +
                 '}';
     }
 }

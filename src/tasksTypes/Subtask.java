@@ -1,7 +1,5 @@
 package tasksTypes;
 
-import managers.StatusList;
-
 import java.util.Objects;
 
 public class Subtask extends Task {
@@ -10,15 +8,15 @@ public class Subtask extends Task {
 
     public Subtask(int parentId) {
         epicId = parentId;
-        this.status = statusTask.NEW;
+        this.status = Status.NEW;
     }
 
     public Subtask(String name, String description) {
         super(name, description);
-        this.status = statusTask.NEW;
+        this.status = Status.NEW;
     }
 
-    public Subtask(String name, String description, statusTask status) {
+    public Subtask(String name, String description, Status status) {
         super(name, description, status);
     }
 
