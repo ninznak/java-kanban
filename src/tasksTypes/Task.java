@@ -2,13 +2,15 @@ package tasksTypes;
 
 import java.util.Objects;
 
+import managers.InMemoryTaskManager;
+import managers.TaskManager;
 import managers.WhitespaceDeleter;
 
-public class Task {
+public class Task implements TaskManager {
     protected String name;
     protected String description;
     protected int id;
-    public Status status;            // NEW, IN_PROGRESS, DONE
+    protected Status status;            // NEW, IN_PROGRESS, DONE
 
     public Task() {
         this.status = status.NEW;
@@ -61,6 +63,13 @@ public class Task {
 
     public Status getStatus() {
         return status;
+    }
+
+    @Override
+    public void addNewTask(Task obj){           // added different types of tasks
+        System.out.println("Добавлена обычная задача TASK, присвоен номер id №" + InMemoryTaskManager.idGenerator);
+        obj.setId(InMemoryTaskManager.idGenerator++);
+        InMemoryTaskManager.simpleTasks.put(obj.getId(), obj);
     }
 
     @Override
