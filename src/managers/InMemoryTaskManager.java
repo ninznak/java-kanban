@@ -10,6 +10,7 @@ public class InMemoryTaskManager implements TaskManager {
     Map<Integer, Task> simpleTasks = new HashMap<>();
     Map<Integer, Epic> epicTasks = new HashMap<>();
     Map<Integer, Subtask> subtasks = new HashMap<>();
+    List<Task> historyArray = new ArrayList<>();
 
     @Override
     public void addNewTask(Task obj) {           // added different types of tasks
@@ -57,6 +58,12 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Task getTaskById(int id) {
+        if(historyArray.size() < 10){
+            historyArray.add(simpleTasks.get(id));
+        } else {
+            historyArray.remove(0);
+            historyArray.add(simpleTasks.get(id));
+        }
         return simpleTasks.get(id);
     }
 
@@ -95,6 +102,12 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Epic getEpicById(int id) {
+        if(historyArray.size() < 10){
+            historyArray.add(epicTasks.get(id));
+        } else {
+            historyArray.remove(0);
+            historyArray.add(epicTasks.get(id));
+        }
         System.out.println("Вывод EPIC задачи id №" + id);
         return epicTasks.get(id);
     }
@@ -126,11 +139,19 @@ public class InMemoryTaskManager implements TaskManager {
         subtasks.remove(id);
     }
 
+    @Override
     public Subtask getSubtaskById(int id) {
+        if(historyArray.size() < 10){
+            historyArray.add(subtasks.get(id));
+        } else {
+            historyArray.remove(0);
+            historyArray.add(subtasks.get(id));
+        }
         System.out.println("Получена подзадача id №" + id);
         return subtasks.get(id);
     }
 
+    @Override
     public void updateSubtask(Subtask oldSubtask, Subtask newSubtask) {
         int counter = 0;
 
@@ -152,5 +173,10 @@ public class InMemoryTaskManager implements TaskManager {
         if (counter == subtaskForCheck.size()) {
             epicTasks.get(oldSubtask.getEpicParentId()).setStatus(Status.DONE);
         }
+    }
+
+    public void getHistory(){
+        System.out.println("История просмотра задач");
+        System.out.println(historyArray);
     }
 }

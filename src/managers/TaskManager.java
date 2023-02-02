@@ -1,19 +1,17 @@
 package managers;
 
 import tasksTypes.Epic;
-import tasksTypes.Status;
 import tasksTypes.Subtask;
 import tasksTypes.Task;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 public interface TaskManager {
 
     void addNewTask(Task obj);
+
     void addNewEpic(Epic epic);
+
     void addNewSubtask(Epic epicParent, Subtask subtask);
 
     List<Task> getSimpleTasks();
@@ -45,4 +43,6 @@ public interface TaskManager {
     Subtask getSubtaskById(int id);
 
     void updateSubtask(Subtask oldSubtask, Subtask newSubtask);
+
+    void getHistory();
 }
