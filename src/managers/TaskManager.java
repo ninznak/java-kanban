@@ -11,21 +11,18 @@ import java.util.Iterator;
 import java.util.List;
 
 public interface TaskManager {
-    void addNewTask();
 
-    void addNewEpic();
-
-    void addNewSubtask();
+    void addNewTask(Task obj);
+    void addNewEpic(Epic epic);
+    void addNewSubtask(Epic epicParent, Subtask subtask);
 
     List<Task> getSimpleTasks();
 
     List<Epic> getEpicTasks();
 
-    HashMap<Integer, Subtask> getSubtasks():
+    List<Subtask> getSubtasks();
 
     void cleanTasks();
-
-    Task getTaskById();
 
     Task getTaskById(int id);
 

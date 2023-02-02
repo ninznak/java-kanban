@@ -2,17 +2,14 @@ package managers;
 
 import tasksTypes.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 
 public class InMemoryTaskManager implements TaskManager {
     public static int idGenerator;
-    public static HashMap<Integer, Task> simpleTasks = new HashMap<>();
-    private HashMap<Integer, Epic> epicTasks = new HashMap<>();
-    private HashMap<Integer, Subtask> subtasks = new HashMap<>();
+    Map<Integer, Task> simpleTasks = new HashMap<>();
+    Map<Integer, Epic> epicTasks = new HashMap<>();
+    Map<Integer, Subtask> subtasks = new HashMap<>();
 
     @Override
     public void addNewTask(Task obj) {           // added different types of tasks
@@ -21,12 +18,14 @@ public class InMemoryTaskManager implements TaskManager {
         simpleTasks.put(obj.getId(), obj);
     }
 
+    @Override
     public void addNewEpic(Epic epic) {
         System.out.println("Добавлена задача EPIC, присвоен номер id №" + idGenerator);
         epic.setId(idGenerator);
         epicTasks.put(idGenerator++, epic);
     }
 
+    @Override
     public void addNewSubtask(Epic epicParent, Subtask subtask) {
         System.out.println("Добавлена подзадача SUBTASK, присвоен номер id №" +
                 idGenerator + ". EPIC родитель id №" + epicParent.getId());
@@ -36,42 +35,51 @@ public class InMemoryTaskManager implements TaskManager {
         epicParent.setStatus(Status.IN_PROGRESS);
     }
 
-    public HashMap<Integer, Task> getSimpleTasks() {
-        return simpleTasks;
+    @Override
+    public List<Task> getSimpleTasks() {
+        return new ArrayList<>(simpleTasks.values());
     }
 
-    public HashMap<Integer, Epic> getEpicTasks() {
-        return epicTasks;
+    @Override
+    public List<Epic> getEpicTasks() {
+        return new ArrayList<>(epicTasks.values());
     }
 
-    public HashMap<Integer, Subtask> getSubtasks() {
-        return subtasks;
+    @Override
+    public List<Subtask> getSubtasks() {
+        return new ArrayList<>(subtasks.values());
     }
 
+    @Override
     public void cleanTasks() {               // Tasks methods
         simpleTasks.clear();
     }
 
+    @Override
     public Task getTaskById(int id) {
         return simpleTasks.get(id);
     }
 
+    @Override
     public void updateTask(Task task, Task newTask) {
         newTask.setId(task.getId());
         simpleTasks.put(task.getId(), newTask);
     }
 
+    @Override
     public void deleteTaskById(int id) {
         simpleTasks.remove(id);
         System.out.println("Задача tasksTypes.Task " + " id#" + id + " удалена");
     }
 
+    @Override
     public void cleanAllEpics() {     // tasksTypes.Epic methods
         System.out.println("Все задачи tasksTypes.Epic и их подзадачи удалены");
         epicTasks.clear();
         subtasks.clear();
     }
 
+    @Override
     public void deleteEpicById(int id) {
         System.out.println("Задача EPIC id-" + id + " удалена вместе с подзадачами");
         epicTasks.remove(id);
@@ -85,11 +93,13 @@ public class InMemoryTaskManager implements TaskManager {
         }
     }
 
+    @Override
     public Epic getEpicById(int id) {
         System.out.println("Вывод EPIC задачи id №" + id);
         return epicTasks.get(id);
     }
 
+    @Override
     public List<Subtask> getEpicSubtasks(Epic epic) {
         System.out.println("Получены подзадачи от EPIC id №" + epic.getId() + ". Название - " + epic.getName());
         List<Subtask> subtaskList = new ArrayList<>();
@@ -101,6 +111,7 @@ public class InMemoryTaskManager implements TaskManager {
         return subtaskList;
     }
 
+    @Override
     public void cleanAllSubtasks() {                 //tasksTypes.Subtask methods
         subtasks.clear();
         System.out.println("Все подзадачи очищены!");
@@ -109,6 +120,7 @@ public class InMemoryTaskManager implements TaskManager {
         }
     }
 
+    @Override
     public void deleteSubtaskById(int id) {
         System.out.println("Подзадача " + " id №" + id + " удалена");
         subtasks.remove(id);

@@ -6,7 +6,7 @@ import managers.InMemoryTaskManager;
 import managers.TaskManager;
 import managers.WhitespaceDeleter;
 
-public class Task implements TaskManager {
+public class Task {
     protected String name;
     protected String description;
     protected int id;
@@ -63,13 +63,6 @@ public class Task implements TaskManager {
 
     public Status getStatus() {
         return status;
-    }
-
-    @Override
-    public void addNewTask(Task obj){           // added different types of tasks
-        System.out.println("Добавлена обычная задача TASK, присвоен номер id №" + InMemoryTaskManager.idGenerator);
-        obj.setId(InMemoryTaskManager.idGenerator++);
-        InMemoryTaskManager.simpleTasks.put(obj.getId(), obj);
     }
 
     @Override
