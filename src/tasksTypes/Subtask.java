@@ -43,7 +43,7 @@ public class Subtask extends Task {
 
     @Override
     public String toString() {
-        return "tasksTypes.Subtask{" +
+        return "Subtask{" +
                 "epicId=" + epicId +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +

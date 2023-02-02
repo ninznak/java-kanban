@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface TaskManager {
 
+    List<Task> getHistory();
+
     void addNewTask(Task obj);
 
     void addNewEpic(Epic epic);
@@ -44,5 +46,4 @@ public interface TaskManager {
 
     void updateSubtask(Subtask oldSubtask, Subtask newSubtask);
 
-    void getHistory();
 }
