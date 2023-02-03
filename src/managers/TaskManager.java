@@ -36,6 +36,8 @@ public interface TaskManager {
 
     Epic getEpicById(int id);
 
+    void updateStatusEpic(Epic epic);
+
     List<Subtask> getEpicSubtasks(Epic epic);
 
     void cleanAllSubtasks();
@@ -45,5 +47,4 @@ public interface TaskManager {
     Subtask getSubtaskById(int id);
 
     void updateSubtask(Subtask oldSubtask, Subtask newSubtask);
-
 }

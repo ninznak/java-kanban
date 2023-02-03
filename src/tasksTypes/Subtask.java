@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Subtask extends Task {
 
-    protected int epicId;
+    private int epicId;
 
     public Subtask(int parentId) {
         epicId = parentId;

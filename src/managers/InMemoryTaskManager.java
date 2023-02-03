@@ -29,17 +29,18 @@ public class InMemoryTaskManager implements TaskManager {
     public void addNewEpic(Epic epic) {
         System.out.println("Добавлена задача EPIC, присвоен номер id №" + idGenerator);
         epic.setId(idGenerator);
+        updateStatusEpic(epic);
         epicTasks.put(idGenerator++, epic);
     }
 
     @Override
-    public void addNewSubtask(Epic epicParent, Subtask subtask) {
+    public void addNewSubtask(Epic epicParent, Subtask subtask) {  //!!
         System.out.println("Добавлена подзадача SUBTASK, присвоен номер id №" +
                 idGenerator + ". EPIC родитель id №" + epicParent.getId());
         subtask.setId(idGenerator++);
         subtask.setEpicParentId(epicParent.getId());
         subtasks.put(subtask.getId(), subtask);
-        epicParent.setStatus(Status.IN_PROGRESS);
+        updateStatusEpic(epicParent);
     }
 
     @Override
@@ -121,17 +122,39 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
+    public void updateStatusEpic(Epic epic) {
+        int counterDone = 0;
+        List<Subtask> subtaskForCheck = getEpicSubtasks(epic);
+
+        if (getEpicSubtasks(epic).isEmpty()) {
+            epic.setStatus(Status.NEW);
+        } else {
+            for (Subtask check : subtaskForCheck) {
+                if (check.getStatus().equals(Status.DONE)) {
+                    counterDone++;
+                }
+            }
+            if (counterDone == subtaskForCheck.size()) {
+                epic.setStatus(Status.DONE);
+            } else {
+                epic.setStatus(Status.IN_PROGRESS);
+            }
+        }
+    }
+
+    @Override
     public void cleanAllSubtasks() {                 //tasksTypes.Subtask methods
         subtasks.clear();
         System.out.println("Все подзадачи очищены!");
         for (Epic epic : epicTasks.values()) {
-            epic.setStatus(Status.NEW);
+            updateStatusEpic(epic);
         }
     }
 
     @Override
     public void deleteSubtaskById(int id) {
         System.out.println("Подзадача " + " id №" + id + " удалена");
+        updateStatusEpic(getEpicById(getSubtaskById(id).getEpicParentId()));
         subtasks.remove(id);
     }
 
@@ -144,25 +167,11 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void updateSubtask(Subtask oldSubtask, Subtask newSubtask) {
-        int counter = 0;
 
         System.out.println("Подзадача " + oldSubtask.getId() + " обновлена");
         newSubtask.setId(oldSubtask.getId());
         newSubtask.setEpicParentId(oldSubtask.getEpicParentId());
         subtasks.put(oldSubtask.getId(), newSubtask);
-
-        if (!newSubtask.getStatus().equals(Status.DONE)) {
-            return;
-        }
-
-        List<Subtask> subtaskForCheck = getEpicSubtasks(epicTasks.get(oldSubtask.getEpicParentId()));
-        for (Subtask check : subtaskForCheck) {
-            if (check.getStatus().equals(Status.DONE)) {
-                counter++;
-            }
-        }
-        if (counter == subtaskForCheck.size()) {
-            epicTasks.get(oldSubtask.getEpicParentId()).setStatus(Status.DONE);
-        }
+        updateStatusEpic(epicTasks.get(oldSubtask.getEpicParentId()));
     }
 }
