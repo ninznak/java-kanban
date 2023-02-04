@@ -5,17 +5,16 @@ import tasksTypes.Task;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InMemoryHistoryManager implements HistoryManager{
+public class InMemoryHistoryManager implements HistoryManager {
 
-    List<Task> historyArray = new ArrayList<>();
+    private List<Task> historyArray = new ArrayList<>();
 
     @Override
     public void addTask(Task task) {
-        if(historyArray.size() < 10){
-            historyArray.add(task);
-        } else {
+        historyArray.add(task);
+
+        if (historyArray.size() == 11) {
             historyArray.remove(0);
-            historyArray.add(task);
         }
     }
 

@@ -6,14 +6,14 @@ import java.util.*;
 
 
 public class InMemoryTaskManager implements TaskManager {
-    public static int idGenerator;
-    Map<Integer, Task> simpleTasks = new HashMap<>();
-    Map<Integer, Epic> epicTasks = new HashMap<>();
-    Map<Integer, Subtask> subtasks = new HashMap<>();
-    HistoryManager historyManager = Managers.getDefaultHistory();
+    private static int idGenerator;
+    private Map<Integer, Task> simpleTasks = new HashMap<>();
+    private Map<Integer, Epic> epicTasks = new HashMap<>();
+    private Map<Integer, Subtask> subtasks = new HashMap<>();
+    private HistoryManager historyManager = Managers.getDefaultHistory();
 
     @Override
-    public List<Task> getHistory(){
+    public List<Task> getHistory() {
         System.out.println("История просмотра задач");
         return historyManager.getHistory();
     }
@@ -154,8 +154,8 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void deleteSubtaskById(int id) {
         System.out.println("Подзадача " + " id №" + id + " удалена");
-        updateStatusEpic(getEpicById(getSubtaskById(id).getEpicParentId()));
         subtasks.remove(id);
+        updateStatusEpic(getEpicById(getSubtaskById(id).getEpicParentId()));
     }
 
     @Override
