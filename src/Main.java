@@ -1,4 +1,5 @@
-import managers.InMemoryTaskManager;
+import managers.Managers;
+import managers.TaskManager;
 import tasksTypes.Epic;
 import tasksTypes.Status;
 import tasksTypes.Subtask;
@@ -10,7 +11,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        InMemoryTaskManager taskManager = new InMemoryTaskManager();
+        TaskManager taskManager = Managers.getDefault();
 
         Task task1 = new Task("Задача Простая 1", "Купить молоко, Купить яйца, купить торт");
         taskManager.addNewTask(task1);
