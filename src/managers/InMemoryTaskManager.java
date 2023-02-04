@@ -167,7 +167,6 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void updateSubtask(Subtask oldSubtask, Subtask newSubtask) {
-
         System.out.println("Подзадача " + oldSubtask.getId() + " обновлена");
         newSubtask.setId(oldSubtask.getId());
         newSubtask.setEpicParentId(oldSubtask.getEpicParentId());

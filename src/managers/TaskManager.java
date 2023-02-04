@@ -47,4 +47,5 @@ public interface TaskManager {
     Subtask getSubtaskById(int id);
 
     void updateSubtask(Subtask oldSubtask, Subtask newSubtask);
+
 }
