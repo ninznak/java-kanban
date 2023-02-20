@@ -78,6 +78,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void deleteTaskById(int id) {
         simpleTasks.remove(id);
+        historyManager.remove(id);
         System.out.println("Задача tasksTypes.Task " + " id#" + id + " удалена");
     }
 
@@ -92,6 +93,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void deleteEpicById(int id) {
         System.out.println("Задача EPIC id-" + id + " удалена вместе с подзадачами");
         epicTasks.remove(id);
+        historyManager.remove(id);
         Iterator<Integer> it = subtasks.keySet().iterator();
 
         while (it.hasNext()) {
@@ -154,6 +156,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void deleteSubtaskById(int id) {
         System.out.println("Подзадача " + " id №" + id + " удалена");
+        historyManager.remove(id);
         subtasks.remove(id);
         updateStatusEpic(getEpicById(getSubtaskById(id).getEpicParentId()));
     }
