@@ -3,13 +3,15 @@ package managers;
 import tasksTypes.Task;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 public class InMemoryHistoryManager implements HistoryManager {
 
     private List<Task> historyArray = new ArrayList<>();
-    private List<Task> CustomLinkedList = new LinkedList<>();
+    private CustomLinkedList<Task> customLinkedList = new CustomLinkedList<>();
+    private Map<Integer, Node<Task>> historyHashMap = new HashMap<>();
 
     @Override
     public void addTask(Task task) {
@@ -29,4 +31,27 @@ public class InMemoryHistoryManager implements HistoryManager {
     public List<Task> getHistory() {
         return historyArray;
     }
+
+    protected class CustomLinkedList<T>{
+        protected Node<Task> head;
+        protected Node<Task> tail;
+        private int size;
+
+        private void linkLast(Task task){
+            final Node<Task> oldTail = tail;
+            final Node<Task> newTailNode = new Node<>(oldTail, task, null);
+            tail = newTailNode;
+            size++;
+        }
+
+        private List<Task> getTasks() {
+            List<Task> listOfTasks = new ArrayList<>();
+            return listOfTasks;
+        }
+
+        private void removeNode(Node<Task> node){
+            return;
+        }
+    }
+
 }
