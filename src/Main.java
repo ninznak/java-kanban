@@ -39,6 +39,7 @@ public class Main {
         Task taskToUpdate = new Task("Задача Простая 1UPD", "Купить молокоNEW, Купить яйца, купить торт",
                 Status.DONE);
         taskManager.updateTask(task2, taskToUpdate);
+        System.out.println();
 
         Subtask subtaskUpd = new Subtask("Подзададача второ эпика",
                 "Чтото нужно сделать, сделать еще", Status.DONE);

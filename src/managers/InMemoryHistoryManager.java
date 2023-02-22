@@ -15,11 +15,12 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public void addTask(Task task) {
-        historyArray.add(task);
+        customLinkedList.linkLast(task);
+        /*historyArray.add(task);
 
         if (historyArray.size() > 10) {
             historyArray.remove(0);
-        }
+        }*/
     }
 
     @Override
@@ -38,10 +39,16 @@ public class InMemoryHistoryManager implements HistoryManager {
         private int size;
 
         private void linkLast(Task task){
+            size++;
             final Node<Task> oldTail = tail;
             final Node<Task> newTailNode = new Node<>(oldTail, task, null);
             tail = newTailNode;
-            size++;
+            if (oldTail == null ){
+                head = newTailNode;
+            } else {
+                oldTail.next = newTailNode;
+            }
+
         }
 
         private List<Task> getTasks() {
@@ -50,6 +57,7 @@ public class InMemoryHistoryManager implements HistoryManager {
         }
 
         private void removeNode(Node<Task> node){
+            size--;
             return;
         }
     }
