@@ -99,6 +99,7 @@ public class InMemoryTaskManager implements TaskManager {
         while (it.hasNext()) {
             Integer key = it.next();
             if (subtasks.get(key).getEpicParentId() == id) {
+                historyManager.remove(key);
                 it.remove();
             }
         }

@@ -43,5 +43,11 @@ public class Main {
         taskManager.deleteTaskById(1);
 
         System.out.println(taskManager.getHistory());
+
+
+        taskManager.deleteEpicById(2);
+
+        System.out.println(taskManager.getHistory());
+
     }
 }
