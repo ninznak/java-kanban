@@ -9,57 +9,79 @@ import java.util.HashMap;
 
 public class InMemoryHistoryManager implements HistoryManager {
 
-    private List<Task> historyArray = new ArrayList<>();
-    private CustomLinkedList<Task> customLinkedList = new CustomLinkedList<>();
+    public CustomLinkedList<Task> customLinkedList = new CustomLinkedList<>();
     private Map<Integer, Node<Task>> historyHashMap = new HashMap<>();
 
     @Override
     public void addTask(Task task) {
+        remove(task.getId());
         customLinkedList.linkLast(task);
-        /*historyArray.add(task);
-
-        if (historyArray.size() > 10) {
-            historyArray.remove(0);
-        }*/
     }
 
     @Override
     public void remove(int id){
-        historyArray.remove(id);
+        customLinkedList.removeNode(historyHashMap.remove(id));
     };
 
     @Override
     public List<Task> getHistory() {
-        return historyArray;
+        return customLinkedList.getTasks();
     }
 
-    protected class CustomLinkedList<T>{
+    protected class CustomLinkedList<T> {
         protected Node<Task> head;
         protected Node<Task> tail;
-        private int size;
+        public int size;
 
-        private void linkLast(Task task){
+        private void linkLast(Task task) {
             size++;
             final Node<Task> oldTail = tail;
             final Node<Task> newTailNode = new Node<>(oldTail, task, null);
+            historyHashMap.put(task.getId(), newTailNode);
             tail = newTailNode;
-            if (oldTail == null ){
+            if (oldTail == null) {
                 head = newTailNode;
             } else {
                 oldTail.next = newTailNode;
             }
-
         }
 
         private List<Task> getTasks() {
             List<Task> listOfTasks = new ArrayList<>();
+            Node<Task> oneNode = head;
+            while (oneNode != null) {
+                listOfTasks.add(oneNode.data);
+                oneNode = oneNode.next;
+            }
             return listOfTasks;
         }
 
-        private void removeNode(Node<Task> node){
-            size--;
-            return;
+        private void removeNode(Node<Task> node) {
+            if (size != 0) {
+                //node.data = null;
+                //final Node<Task> next = node.next;
+                //final Node<Task> previous = node.previous;
+                if (size == 1) {
+                    head = null;
+                    tail = null;
+                    size--;
+                } else if (size == 2) {
+                    if (node.previous == head) {
+                        tail = null;
+                        size--;
+                    } else {
+                        head = null;
+                        size--;
+                    }
+                } else {
+                    node.next.previous = node.previous.next;
+                    node.previous.next = node.next.previous;
+                    node.data = null;
+                    size--;
+                }
+            } else {
+                System.out.println("Нечего удалять, история пуста");
+            }
         }
     }
-
 }
