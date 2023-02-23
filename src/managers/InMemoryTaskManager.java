@@ -14,7 +14,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public List<Task> getHistory() {
-        System.out.println("История просмотра задач");
+        System.out.println("История просмотра задач: ");
         return historyManager.getHistory();
     }
 

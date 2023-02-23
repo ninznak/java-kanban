@@ -1,3 +1,4 @@
+import managers.InMemoryHistoryManager;
 import managers.Managers;
 import managers.TaskManager;
 import tasksTypes.Epic;
@@ -29,13 +30,18 @@ public class Main {
 
         System.out.println("");
 
-        //System.out.println(taskManager.getSimpleTasks());
-        //System.out.println(taskManager.getEpicTasks());
-        //System.out.println(taskManager.getSubtasks());
         taskManager.getTaskById(0);
-        taskManager.getEpicById(1);
+        taskManager.getTaskById(1);
         taskManager.getEpicById(2);
+        taskManager.getTaskById(1);
         taskManager.getEpicById(6);
+        taskManager.getSubtaskById(3);
+        taskManager.getTaskById(1);
+
+        System.out.println(taskManager.getHistory());
+
+        taskManager.deleteTaskById(1);
+
         System.out.println(taskManager.getHistory());
     }
 }

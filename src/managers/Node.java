@@ -6,8 +6,8 @@ public class Node<T> {
     protected Node<T> previous;
 
     public Node(Node<T> previous, T data, Node<T> next) {
-        this.previous = null;
+        this.previous = previous;
         this.data = data;
-        this.next = null;
+        this.next = next;
     }
 }
