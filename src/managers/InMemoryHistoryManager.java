@@ -14,14 +14,16 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public void addTask(Task task) {
-        remove(task.getId());
-        customLinkedList.linkLast(task);
+        if(task != null){
+            remove(task.getId());
+            customLinkedList.linkLast(task);
+        }
     }
 
     @Override
-    public void remove(int id){
-        customLinkedList.removeNode(historyHashMap.remove(id));
-    };
+    public void remove(int id) {
+        customLinkedList.removeNode(historyHashMap.get(id));
+    }
 
     @Override
     public List<Task> getHistory() {
@@ -57,10 +59,8 @@ public class InMemoryHistoryManager implements HistoryManager {
         }
 
         private void removeNode(Node<Task> node) {
+
             if (size != 0) {
-                //node.data = null;
-                //final Node<Task> next = node.next;
-                //final Node<Task> previous = node.previous;
                 if (size == 1) {
                     head = null;
                     tail = null;
@@ -79,8 +79,6 @@ public class InMemoryHistoryManager implements HistoryManager {
                     node.data = null;
                     size--;
                 }
-            } else {
-                System.out.println("Нечего удалять, история пуста");
             }
         }
     }
