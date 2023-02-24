@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 public class InMemoryHistoryManager implements HistoryManager {
 
-    public CustomLinkedList<Task> customLinkedList = new CustomLinkedList<>();
+    private final CustomLinkedList<Task> customLinkedList = new CustomLinkedList<>();
 
     @Override
     public void addTask(Task task) {
@@ -26,15 +26,14 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public List<Task> getHistory() {
-        System.out.println("Длина истории : " + customLinkedList.size + " шт.");
+        System.out.println("Длина истории : " + customLinkedList.historyHashMap.size());
         return customLinkedList.getTasks();
     }
 
     private static class CustomLinkedList<T> {
         private Node head;
         private Node tail;
-        private Map<Integer, Node<Task>> historyHashMap = new HashMap<>();
-        public int size;
+        private Map<Integer, Node> historyHashMap = new HashMap<>();
 
         private void linkLast(Task task) {
             final Node oldTail = tail;
@@ -46,12 +45,11 @@ public class InMemoryHistoryManager implements HistoryManager {
             } else {
                 oldTail.setNext(newTailNode);
             }
-            size++;
         }
 
         private List<Task> getTasks() {
             List<Task> listOfTasks = new ArrayList<>();
-            Node<Task> oneNode = head;
+            Node oneNode = head;
 
             while (oneNode != null) {
                 listOfTasks.add(oneNode.getData());
@@ -61,7 +59,7 @@ public class InMemoryHistoryManager implements HistoryManager {
         }
 
         private void removeNode(int id) {
-            Node<Task> node = historyHashMap.get(id);
+            Node node = historyHashMap.remove(id);
             if (node != null) {
                 if (head == node && tail == node) {
                     head = null;
@@ -76,8 +74,6 @@ public class InMemoryHistoryManager implements HistoryManager {
                     node.getPrevious().setNext(node.getNext());
                     node.getNext().setPrevious(node.getPrevious());
                 }
-                historyHashMap.remove(id);
-                size--;
             }
         }
     }

@@ -1,17 +1,19 @@
 package managers;
 
-public class Node<Task> {
-    private Node<Task> next;
-    private Task data;
-    private Node<Task> previous;
+import tasksTypes.Task;
 
-    public Node(Node<Task> previous, Task data, Node<Task> next) {
+public class Node {
+    private Node next;
+    private Task data;
+    private Node previous;
+
+    public Node(Node previous, Task data, Node next) {
         this.previous = previous;
         this.data = data;
         this.next = next;
     }
 
-    public Node<Task> getNext() {
+    public Node getNext() {
         return next;
     }
 
@@ -19,11 +21,11 @@ public class Node<Task> {
         return data;
     }
 
-    public Node<Task> getPrevious() {
+    public Node getPrevious() {
         return previous;
     }
 
-    public void setNext(Node<Task> next) {
+    public void setNext(Node next) {
         this.next = next;
     }
 
@@ -31,7 +33,7 @@ public class Node<Task> {
         this.data = data;
     }
 
-    public void setPrevious(Node<Task> previous) {
+    public void setPrevious(Node previous) {
         this.previous = previous;
     }
 }
