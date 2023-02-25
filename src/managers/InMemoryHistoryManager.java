@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 public class InMemoryHistoryManager implements HistoryManager {
 
-    private final CustomLinkedList<Task> customLinkedList = new CustomLinkedList<>();
+    private final CustomLinkedList customLinkedList = new CustomLinkedList();
 
     @Override
     public void addTask(Task task) {
@@ -30,21 +30,21 @@ public class InMemoryHistoryManager implements HistoryManager {
         return customLinkedList.getTasks();
     }
 
-    private static class CustomLinkedList<T> {
+    private static class CustomLinkedList {
         private Node head;
         private Node tail;
-        private Map<Integer, Node> historyHashMap = new HashMap<>();
+        private final Map<Integer, Node> historyHashMap = new HashMap<>();
 
         private void linkLast(Task task) {
-            final Node oldTail = tail;
-            final Node newTailNode = new Node(oldTail, task, null);
-            tail = newTailNode;
-            historyHashMap.put(task.getId(), newTailNode);
-            if (oldTail == null) {
-                head = newTailNode;
+
+            if (tail == null) {
+                tail = head = new Node(null, task, null);
             } else {
-                oldTail.setNext(newTailNode);
+                Node newTailNode = new Node(tail, task, null);
+                tail.setNext(newTailNode);              // хвост начинает ссылаться на новый добавленный элемент
+                tail = newTailNode;                     // старый хвост меняет себя на новую ноду
             }
+            historyHashMap.put(task.getId(), tail);     // по итогам добавления в customList добавляем и в HashMap
         }
 
         private List<Task> getTasks() {
@@ -60,14 +60,15 @@ public class InMemoryHistoryManager implements HistoryManager {
 
         private void removeNode(int id) {
             Node node = historyHashMap.remove(id);
+
             if (node != null) {
-                if (head == node && tail == node) {
+                if (head.equals(node) && tail.equals(node)) {
                     head = null;
                     tail = null;
-                } else if (head == node) {
+                } else if (head.equals(node)) {
                     head = node.getNext();
                     head.setPrevious(null);
-                } else if (tail == node) {
+                } else if (tail.equals(node)) {
                     tail = node.getPrevious();
                     tail.setNext(null);
                 } else {
