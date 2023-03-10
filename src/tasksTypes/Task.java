@@ -1,10 +1,8 @@
 package tasksTypes;
 
-import java.util.Objects;
-
-import managers.InMemoryTaskManager;
-import managers.TaskManager;
 import managers.WhitespaceDeleter;
+
+import java.util.Objects;
 
 public class Task {
     protected String name;

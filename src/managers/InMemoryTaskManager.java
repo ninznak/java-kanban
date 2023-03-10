@@ -7,10 +7,10 @@ import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
     private static int idGenerator;
-    private Map<Integer, Task> simpleTasks = new HashMap<>();
-    private Map<Integer, Epic> epicTasks = new HashMap<>();
-    private Map<Integer, Subtask> subtasks = new HashMap<>();
-    private HistoryManager historyManager = Managers.getDefaultHistory();
+    private final Map<Integer, Task> simpleTasks = new HashMap<>();
+    private final Map<Integer, Epic> epicTasks = new HashMap<>();
+    private final Map<Integer, Subtask> subtasks = new HashMap<>();
+    private final HistoryManager historyManager = Managers.getDefaultHistory();
 
     @Override
     public List<Task> getHistory() {
