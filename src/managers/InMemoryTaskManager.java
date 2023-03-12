@@ -1,7 +1,9 @@
 package managers;
 
+import exceptions.ManagerSaveException;
 import tasksTypes.*;
 
+import java.io.IOException;
 import java.util.*;
 
 
@@ -13,20 +15,20 @@ public class InMemoryTaskManager implements TaskManager {
     private final HistoryManager historyManager = Managers.getDefaultHistory();
 
     @Override
-    public List<Task> getHistory() {
+    public List<Task> getHistory() throws ManagerSaveException {
         System.out.println("История просмотра задач: ");
         return historyManager.getHistory();
     }
 
     @Override
-    public void addNewTask(Task obj) {           // added different types of tasks
+    public void addNewTask(Task obj) throws IOException {           // added different types of tasks
         System.out.println("Добавлена обычная задача TASK, присвоен номер id №" + idGenerator);
         obj.setId(idGenerator++);
         simpleTasks.put(obj.getId(), obj);
     }
 
     @Override
-    public void addNewEpic(Epic epic) {
+    public void addNewEpic(Epic epic) throws IOException {
         System.out.println("Добавлена задача EPIC, присвоен номер id №" + idGenerator);
         epic.setId(idGenerator);
         updateStatusEpic(epic);
@@ -34,7 +36,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void addNewSubtask(Epic epicParent, Subtask subtask) {  //!!
+    public void addNewSubtask(Epic epicParent, Subtask subtask) throws ManagerSaveException {  //!!
         System.out.println("Добавлена подзадача SUBTASK, присвоен номер id №" +
                 idGenerator + ". EPIC родитель id №" + epicParent.getId());
         subtask.setId(idGenerator++);
@@ -44,7 +46,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public List<Task> getSimpleTasks() {
+    public List<Task> getSimpleTasks() throws ManagerSaveException {
         return new ArrayList<>(simpleTasks.values());
     }
 
@@ -54,43 +56,43 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public List<Subtask> getSubtasks() {
+    public List<Subtask> getSubtasks() throws ManagerSaveException {
         return new ArrayList<>(subtasks.values());
     }
 
     @Override
-    public void cleanTasks() {               // Tasks methods
+    public void cleanTasks() throws ManagerSaveException {               // Tasks methods
         simpleTasks.clear();
     }
 
     @Override
-    public Task getTaskById(int id) {
+    public Task getTaskById(int id) throws ManagerSaveException {
         historyManager.addTask(simpleTasks.get(id));
         return simpleTasks.get(id);
     }
 
     @Override
-    public void updateTask(Task task, Task newTask) {
+    public void updateTask(Task task, Task newTask) throws ManagerSaveException {
         newTask.setId(task.getId());
         simpleTasks.put(task.getId(), newTask);
     }
 
     @Override
-    public void deleteTaskById(int id) {
+    public void deleteTaskById(int id) throws ManagerSaveException {
         simpleTasks.remove(id);
         historyManager.remove(id);
         System.out.println("Задача tasksTypes.Task " + " id#" + id + " удалена");
     }
 
     @Override
-    public void cleanAllEpics() {     // tasksTypes.Epic methods
+    public void cleanAllEpics() throws ManagerSaveException {     // tasksTypes.Epic methods
         System.out.println("Все задачи tasksTypes.Epic и их подзадачи удалены");
         epicTasks.clear();
         subtasks.clear();
     }
 
     @Override
-    public void deleteEpicById(int id) {
+    public void deleteEpicById(int id) throws ManagerSaveException {
         System.out.println("Задача EPIC id-" + id + " удалена вместе с подзадачами");
         epicTasks.remove(id);
         historyManager.remove(id);
@@ -106,14 +108,14 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public Epic getEpicById(int id) {
+    public Epic getEpicById(int id) throws ManagerSaveException {
         historyManager.addTask(epicTasks.get(id));
         System.out.println("Вывод EPIC задачи id №" + id);
         return epicTasks.get(id);
     }
 
     @Override
-    public List<Subtask> getEpicSubtasks(Epic epic) {
+    public List<Subtask> getEpicSubtasks(Epic epic) throws ManagerSaveException {
         System.out.println("Получены подзадачи от EPIC id №" + epic.getId() + ". Название - " + epic.getName());
         List<Subtask> subtaskList = new ArrayList<>();
         for (Subtask subtask : subtasks.values()) {
@@ -125,7 +127,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void updateStatusEpic(Epic epic) {
+    public void updateStatusEpic(Epic epic) throws ManagerSaveException {
         int counterDone = 0;
         List<Subtask> subtaskForCheck = getEpicSubtasks(epic);
 
@@ -146,7 +148,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void cleanAllSubtasks() {                 //tasksTypes.Subtask methods
+    public void cleanAllSubtasks() throws ManagerSaveException {                 //tasksTypes.Subtask methods
         subtasks.clear();
         System.out.println("Все подзадачи очищены!");
         for (Epic epic : epicTasks.values()) {
@@ -155,7 +157,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void deleteSubtaskById(int id) {
+    public void deleteSubtaskById(int id) throws ManagerSaveException {
         System.out.println("Подзадача " + " id №" + id + " удалена");
         historyManager.remove(id);
         subtasks.remove(id);
@@ -163,14 +165,14 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public Subtask getSubtaskById(int id) {
+    public Subtask getSubtaskById(int id) throws ManagerSaveException {
         historyManager.addTask(subtasks.get(id));
         System.out.println("Получена подзадача id №" + id);
         return subtasks.get(id);
     }
 
     @Override
-    public void updateSubtask(Subtask oldSubtask, Subtask newSubtask) {
+    public void updateSubtask(Subtask oldSubtask, Subtask newSubtask) throws ManagerSaveException {
         System.out.println("Подзадача " + oldSubtask.getId() + " обновлена");
         newSubtask.setId(oldSubtask.getId());
         newSubtask.setEpicParentId(oldSubtask.getEpicParentId());
