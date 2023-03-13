@@ -14,6 +14,10 @@ public class InMemoryTaskManager implements TaskManager {
     private final Map<Integer, Subtask> subtasks = new HashMap<>();
     private final HistoryManager historyManager = Managers.getDefaultHistory();
 
+    public HistoryManager getHistoryManager(){
+        return historyManager;
+    }
+
     @Override
     public List<Task> getHistory() throws ManagerSaveException {
         System.out.println("История просмотра задач: ");
@@ -46,7 +50,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public List<Task> getSimpleTasks() throws ManagerSaveException {
+    public List<Task> getSimpleTasks() {
         return new ArrayList<>(simpleTasks.values());
     }
 
@@ -56,7 +60,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public List<Subtask> getSubtasks() throws ManagerSaveException {
+    public List<Subtask> getSubtasks() {
         return new ArrayList<>(subtasks.values());
     }
 
@@ -66,7 +70,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public Task getTaskById(int id) throws ManagerSaveException {
+    public Task getTaskById(int id) {
         historyManager.addTask(simpleTasks.get(id));
         return simpleTasks.get(id);
     }
@@ -108,14 +112,14 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public Epic getEpicById(int id) throws ManagerSaveException {
+    public Epic getEpicById(int id) {
         historyManager.addTask(epicTasks.get(id));
         System.out.println("Вывод EPIC задачи id №" + id);
         return epicTasks.get(id);
     }
 
     @Override
-    public List<Subtask> getEpicSubtasks(Epic epic) throws ManagerSaveException {
+    public List<Subtask> getEpicSubtasks(Epic epic) {
         System.out.println("Получены подзадачи от EPIC id №" + epic.getId() + ". Название - " + epic.getName());
         List<Subtask> subtaskList = new ArrayList<>();
         for (Subtask subtask : subtasks.values()) {
@@ -165,7 +169,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public Subtask getSubtaskById(int id) throws ManagerSaveException {
+    public Subtask getSubtaskById(int id) {
         historyManager.addTask(subtasks.get(id));
         System.out.println("Получена подзадача id №" + id);
         return subtasks.get(id);

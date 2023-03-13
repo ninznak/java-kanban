@@ -6,6 +6,8 @@ import tasksTypes.Subtask;
 import tasksTypes.Task;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
@@ -17,6 +19,43 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         TaskManager taskManager = Managers.getDefault();
+        FileBackedTasksManager fileBackedTasksManager = Managers.getDefaultFile("C:\\PracticumJava\\java-kanban\\data\\save.csv");
+
+        Path autosaveFileDirectory = Paths.get("C:\\PracticumJava\\java-kanban\\data\\");
+        Path autosaveFile = Paths.get(autosaveFileDirectory.toString(), "save.csv");
+
+        if (Files.exists(autosaveFile)){
+            fileBackedTasksManager.getHistory();
+        }
+
+        if (!Files.exists(autosaveFile)){
+            try {
+                FileBackedTasksManager newFile = new FileBackedTasksManager(Files.createFile(autosaveFile).toFile());
+
+            } catch (IOException e) {
+                System.out.println("Ошибка записи");
+            }
+        }
+
+       /* try {
+        } catch (IOException ex){
+            System.out.println("Файл уже существует");
+        }*/
+
+
+
+        try {
+            FileBackedTasksManager.loadFromFile(autosaveFileDirectory.resolve( "save.csv").toFile());
+        } catch (FileNotFoundException ex) {
+            System.out.println("Файл по указанному пути отсутствует");
+        }
+
+
+
+
+
+        fileBackedTasksManager.addNewTask(new Task("Задача Простая 1", "Купить молоко, Купить яйца, купить торт"));
+
 
         taskManager.addNewTask(new Task("Задача Простая 1", "Купить молоко, Купить яйца, купить торт"));
         taskManager.addNewTask(new Task("Задача простая2 на воскресенье", "Повеселиться, кино , спать"));
@@ -41,28 +80,6 @@ public class Main {
         taskManager.getEpicById(6);
         taskManager.getSubtaskById(3);
         taskManager.getTaskById(1);
-
-        Path path = Paths.get("save.txt");
-        Files.deleteIfExists(path);
-        //Files.createFile(Paths.get("save.txt"));
-
-        String x = "fgfgdgddd";
-
-        try {
-            Files.createDirectory(Paths.get("C:\\PracticumJava\\java-kanban\\data\\"));
-        } catch (IOException ex) {
-            //ex.printStackTrace();
-            //throw new IOException("чтото не то");
-            System.out.println("Такая директория уже есть: " + ex.getCause());
-        }
-
-        try {
-            FileBackedTasksManager newFile = new FileBackedTasksManager(Files.createFile(path).toFile());
-        } catch (FileAlreadyExistsException ex) {
-            System.out.println("Файл уже существует");
-            throw new IOException(ex.getMessage());
-        }
-
 
 
         System.out.println(taskManager.getHistory());
