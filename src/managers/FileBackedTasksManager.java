@@ -24,7 +24,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
 
     private String toFileString(Task task) {            // парсим объект задачи в строку нужного формата
         String type = TaskType.TASK.name();
-        String parentEpicId = "";
+        String parentEpicId = "";                       // пятая колонка которая заполнена только у SUBTASK
 
         if (task instanceof Epic) {
             type = TaskType.EPIC.name();
@@ -36,7 +36,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
                 type + "," +
                 task.getName() + "," +
                 task.getStatus() + "," +
-                task.getDescription().toString();
+                String.join(" " , task.getDescription());
 
         return fileString + parentEpicId;
     }
@@ -101,21 +101,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
         }
     }*/
 
-    /*protected <T extends Task> void readTasks(Task readTask) throws IOException {
-        if (readTask instanceof Epic) {
-            addNewEpic();
-            addNewEpic((Epic)readTask).(readTask.getId(), (Epic) readTask));
-        } else if (readTask instanceof Subtask) {
-            addNewSubtask(); = ((Subtask) readTask).getEpicParentId();
-            Epic epic = getEpicForFileLoad(epicId);
-            epic.addSubtaskId(readTask.getId());
-            epics.put(epicId, epic);
-            subtasks.put(readTask.getId(), (Subtask) readTask);
-        } else {
-            addNewTask(readTask).put(readTask.getId(), readTask);
-        }
-    }*/
-
 
     public static FileBackedTasksManager loadFromFile(File file) throws IOException {
         FileBackedTasksManager fileManager = new FileBackedTasksManager(file);
@@ -131,7 +116,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
                     break;
                 } else {
                     Task currentTask = fromString(line);
-                    //fileManager.readTasks(currentTask);
+
                 }
             }
         } catch (IOException exception) {

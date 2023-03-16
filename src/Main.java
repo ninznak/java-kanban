@@ -1,15 +1,9 @@
 import managers.FileBackedTasksManager;
-import managers.Managers;
-import managers.TaskManager;
 import tasksTypes.Epic;
 import tasksTypes.Subtask;
 import tasksTypes.Task;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -18,15 +12,10 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        TaskManager taskManager = Managers.getDefault();
-        FileBackedTasksManager fileBackedTasksManager = Managers.getDefaultFile("C:\\PracticumJava\\java-kanban\\data\\save.csv");
-
-        Path autosaveFileDirectory = Paths.get("C:\\PracticumJava\\java-kanban\\data\\");
+        Path autosaveFileDirectory = Paths.get("C:/PracticumJava/java-kanban/data/");
         Path autosaveFile = Paths.get(autosaveFileDirectory.toString(), "save.csv");
 
-        if (Files.exists(autosaveFile)){
-            fileBackedTasksManager.getHistory();
-        }
+        FileBackedTasksManager fileManager = new FileBackedTasksManager(autosaveFile.toFile());
 
         if (!Files.exists(autosaveFile)){
             try {
@@ -37,27 +26,35 @@ public class Main {
             }
         }
 
-       /* try {
-        } catch (IOException ex){
-            System.out.println("Файл уже существует");
-        }*/
+        fileManager.addNewTask(new Task("Задача Простая 1", "Купить молоко, Купить яйца, купить торт"));
+        fileManager.addNewTask(new Task("Задача простая2 на воскресенье", "Повеселиться, кино , спать"));
+
+        System.out.println(fileManager.getSimpleTasks());
+        fileManager.getTaskById(1);
+
+        Epic epic1 = new Epic("1 Первая ЭПИЧНАЯ задача", "маленькое описание первого эпика");
+        fileManager.addNewEpic(epic1);
+        fileManager.getTaskById(0);
+        fileManager.getEpicById(2);
+
+
+        fileManager.addNewSubtask(epic1, new Subtask("Подзадача новая", "Описание подзадачи"));
+        fileManager.addNewSubtask(epic1, new Subtask("Подзадача новая 22 ", "Описание подзадачи 22 "));
+        fileManager.addNewSubtask(epic1, new Subtask("Подзадача очередная", "Описание" +
+                " очередной подзадачи"));
+
+        Epic epic2 = new Epic("22 вторая ЭПИЧНАЯ задача", "маленькое описание эпика 22");
+        fileManager.addNewEpic(epic2);
+
+        fileManager.getSubtaskById(4);
+        fileManager.getSubtaskById(3);
+
+
+        fileManager.getHistory();
 
 
 
-        try {
-            FileBackedTasksManager.loadFromFile(autosaveFileDirectory.resolve( "save.csv").toFile());
-        } catch (FileNotFoundException ex) {
-            System.out.println("Файл по указанному пути отсутствует");
-        }
-
-
-
-
-
-        fileBackedTasksManager.addNewTask(new Task("Задача Простая 1", "Купить молоко, Купить яйца, купить торт"));
-
-
-        taskManager.addNewTask(new Task("Задача Простая 1", "Купить молоко, Купить яйца, купить торт"));
+        /*  SPRINT 5  taskManager.addNewTask(new Task("Задача Простая 1", "Купить молоко, Купить яйца, купить торт"));
         taskManager.addNewTask(new Task("Задача простая2 на воскресенье", "Повеселиться, кино , спать"));
         System.out.println(taskManager.getSimpleTasks());
 
@@ -88,10 +85,9 @@ public class Main {
 
         System.out.println(taskManager.getHistory());
 
-
         taskManager.deleteEpicById(2);
 
-        System.out.println(taskManager.getHistory());
+        System.out.println(taskManager.getHistory());*/
 
     }
 }
