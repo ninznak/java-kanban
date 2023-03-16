@@ -89,19 +89,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
         }
     }
 
-    /*protected void readHistory(List<Integer> history) {
-        for (Integer currentId : history) {
-            if (getEpicTasks().contains(currentId)) {
-                ge(currentId);
-            } else if (subtasks.containsKey(currentId)) {
-                getSubtaskForFileLoad(currentId);
-            } else {
-                getTaskForFileLoad(currentId);
-            }
-        }
-    }*/
-
-
     public static FileBackedTasksManager loadFromFile(File file) throws IOException {
         FileBackedTasksManager fileManager = new FileBackedTasksManager(file);
 
@@ -114,9 +101,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
                     assert  history != null;
                     fileManager.readHistory(history);
                     break;
-                } else {
-                    Task currentTask = fromString(line);
-
                 }
             }
         } catch (IOException exception) {
@@ -150,6 +134,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
     public List<Task> getHistory() throws ManagerSaveException {
         List<Task> task = super.getHistory();
         save();
+        System.out.println("История просмотра задач: " + historyToString(getHistoryManager()));
         return task;
     }
 
