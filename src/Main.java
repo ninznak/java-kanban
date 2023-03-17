@@ -8,6 +8,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import static managers.FileBackedTasksManager.loadFromFile;
+
 public class Main {
 
     public static void main(String[] args) throws IOException {
@@ -15,16 +17,21 @@ public class Main {
         Path autosaveFileDirectory = Paths.get("C:/PracticumJava/java-kanban/data/");
         Path autosaveFile = Paths.get(autosaveFileDirectory.toString(), "save.csv");
 
-        FileBackedTasksManager fileManager = new FileBackedTasksManager(autosaveFile.toFile());
+        FileBackedTasksManager fileManager = null;
 
-
-        if (Files.exists(autosaveFile)){
+        if (Files.exists(autosaveFile)) {
             try {
-                fileManager.loadFromFile(autosaveFile.toFile());
+                fileManager = loadFromFile(autosaveFile.toFile());
             } catch (IOException e) {
                 System.out.println("Ошибка");
             }
+        } else {
+            fileManager = new FileBackedTasksManager(autosaveFile.toFile());
         }
+
+        System.out.println("*");
+        fileManager.getEpicTasks();
+        System.out.println("*");
 
         fileManager.addNewTask(new Task("Задача Простая 1", "Купить молоко, Купить яйца, купить торт"));
         fileManager.addNewTask(new Task("Задача простая2 на воскресенье", "Повеселиться, кино , спать"));

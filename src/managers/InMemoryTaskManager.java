@@ -9,9 +9,10 @@ import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
     private static int idGenerator;
-    private final Map<Integer, Task> simpleTasks = new HashMap<>();
-    private final Map<Integer, Epic> epicTasks = new HashMap<>();
-    private final Map<Integer, Subtask> subtasks = new HashMap<>();
+
+    final Map<Integer, Task> simpleTasks = new HashMap<>();
+    final Map<Integer, Epic> epicTasks = new HashMap<>();
+    final Map<Integer, Subtask> subtasks = new HashMap<>();
     private final HistoryManager historyManager = Managers.getDefaultHistory();
 
     public HistoryManager getHistoryManager(){
@@ -182,5 +183,13 @@ public class InMemoryTaskManager implements TaskManager {
         newSubtask.setEpicParentId(oldSubtask.getEpicParentId());
         subtasks.put(oldSubtask.getId(), newSubtask);
         updateStatusEpic(epicTasks.get(oldSubtask.getEpicParentId()));
+    }
+
+    public static int getIdGenerator() {
+        return idGenerator;
+    }
+
+    public static void setIdGenerator(int idGenerator) {
+        InMemoryTaskManager.idGenerator = idGenerator;
     }
 }
