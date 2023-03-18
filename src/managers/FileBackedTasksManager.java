@@ -181,7 +181,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
             writer.write("\n");
             writer.write(historyToString(getHistoryManager()));
         } catch (IOException e) {
-            throw new ManagerSaveException("Произошла ошибка записи" + e);
+            throw new ManagerSaveException("Произошла ошибка записи " + e);
         }
     }
 
