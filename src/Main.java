@@ -19,15 +19,7 @@ public class Main {
 
         FileBackedTasksManager fileManager = null;
 
-        if (Files.exists(autosaveFile)) {
-            try {
-                fileManager = loadFromFile(autosaveFile.toFile());
-            } catch (IOException e) {
-                System.out.println("Ошибка");
-            }
-        } else {
-            fileManager = new FileBackedTasksManager(autosaveFile.toFile());
-        }
+        loadFromFile(autosaveFile.toFile());
 
         System.out.println("*");
         fileManager.getEpicTasks();
